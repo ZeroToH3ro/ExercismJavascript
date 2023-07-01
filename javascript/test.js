@@ -1,18 +1,20 @@
-const compute = (firstStr, secondStr) => {
-    if(firstStr.length !== secondStr.length){
-        throw new Error('strands must be of equal length');
+class Squares {
+    constructor(number) {
+        this.number = number;
     }
 
-    let countDiff = 0;
-
-    for(let i=0; i<firstStr.length; i++){
-        if(firstStr[i] !== secondStr[i]){
-            countDiff += 1;
-        }
+    get sumOfSquares() {
+        return Math.pow((this.number * (this.number + 1) / 2), 2);
     }
 
-    return countDiff;
-};
+    get squareOfSum() {
+        return this.number * (this.number + 1) * (2 * this.number + 1) / 6;
+    }
 
-const result = compute('GGACGGATTCTG', 'AGGACGGATTCT');
-console.log(result);
+    get difference() {
+        return Math.abs(this.squareOfSum - this.sumOfSquares);
+    }
+}
+
+let test = new Squares(5);
+console.log(test.squareOfSum);
