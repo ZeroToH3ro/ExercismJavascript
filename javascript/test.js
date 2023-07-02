@@ -1,20 +1,40 @@
-class Squares {
-    constructor(number) {
-        this.number = number;
-    }
+//
+// This is only a SKELETON file for the 'Anagram' exercise. It's been provided as a
+// convenience to get you started writing code faster.
+//
 
-    get sumOfSquares() {
-        return Math.pow((this.number * (this.number + 1) / 2), 2);
+const parse = (words) => {
+    let tempArray = words.split(" ");
+    let result = "";
+    for (let i = 0; i < tempArray.length; i++) {
+        let removeDash = "";
+        if(tempArray[i].includes('-')){
+            removeDash = tempArray[i].replace('-', ' ');
+            let splitWord = removeDash.split(" ");
+            for(let i=0; i<splitWord.length; i++){
+                let removeCharacter = removeSpecialCharacters(splitWord[i]);
+                if (removeCharacter.length === 0) {
+                    continue;
+                }
+                result += removeCharacter.charAt(0).toUpperCase();
+            }
+        } else {
+            let removeCharacter = removeSpecialCharacters(tempArray[i]);
+            if (removeCharacter.length === 0) {
+                continue;
+            }
+            result += removeCharacter.charAt(0).toUpperCase();
+        }
     }
-
-    get squareOfSum() {
-        return this.number * (this.number + 1) * (2 * this.number + 1) / 6;
-    }
-
-    get difference() {
-        return Math.abs(this.squareOfSum - this.sumOfSquares);
-    }
+    return result;
 }
 
-let test = new Squares(5);
-console.log(test.squareOfSum);
+function removeSpecialCharacters(word) {
+    const regex = /[-!@#$%^&*(),.?":{}|<>_]/g;
+    return word.replace(regex, " ");
+}
+
+
+const test = parse('Complementary metal-oxide semiconductor');
+
+console.log(test);

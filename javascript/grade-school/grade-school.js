@@ -28,8 +28,5 @@ export class GradeSchool {
             this.db[grade].push(student)
             this.db[grade].sort()
         }
-
     }
-
-
 }
