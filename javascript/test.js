@@ -1,26 +1,40 @@
-function transpose(input) {
-  if (input.length === 0) return [];
+const abilityModifier = (constitution) => {
+  if (constitution < 3) throw new Error("Ability scores must be at least 3");
 
-  let maxLen = 0;
+  if (constitution > 18) throw new Error("Ability scores can be at most 18");
 
-  const array = input
-    .reverse()
+  return Math.floor((constitution - 10) / 2);
+};
 
-    .map((s) => {
-      maxLen = Math.max(maxLen, s.length);
+const ABILITIES = [
+  "strength",
+  "dexterity",
+  "constitution",
+  "intelligence",
+  "wisdom",
+  "charisma",
+];
 
-      return s + " ".repeat(maxLen - s.length);
-    })
+class Character {
+  constructor() {
+    for (const ability of ABILITIES) {
+      this[ability] = Character.rollAbility();
+    }
 
-    .reverse()
+    this.hitpoints = 10 + abilityModifier(this.constitution);
+  }
 
-    .map((s) => [...s]);
+  static rollAbility() {
+    const rolls = [0, 0, 0, 0].map(() => Math.floor(Math.random() * 6) + 1);
 
-  return array[0]
-    .map((_, i) => array.map((r) => r[i]))
+    return rolls
 
-    .map((r) => r.join(""));
+      .sort()
+
+      .slice(1)
+
+      .reduce((accum, e) => accum + e, 0);
+  }
 }
 
-const test = transpose(['abc', 'de']);
-console.log(test);
+export { Character, abilityModifier };
