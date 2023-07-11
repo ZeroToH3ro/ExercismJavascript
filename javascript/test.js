@@ -1,40 +1,26 @@
-//
-// This is only a SKELETON file for the 'Anagram' exercise. It's been provided as a
-// convenience to get you started writing code faster.
-//
+function transpose(input) {
+  if (input.length === 0) return [];
 
-const parse = (words) => {
-    let tempArray = words.split(" ");
-    let result = "";
-    for (let i = 0; i < tempArray.length; i++) {
-        let removeDash = "";
-        if(tempArray[i].includes('-')){
-            removeDash = tempArray[i].replace('-', ' ');
-            let splitWord = removeDash.split(" ");
-            for(let i=0; i<splitWord.length; i++){
-                let removeCharacter = removeSpecialCharacters(splitWord[i]);
-                if (removeCharacter.length === 0) {
-                    continue;
-                }
-                result += removeCharacter.charAt(0).toUpperCase();
-            }
-        } else {
-            let removeCharacter = removeSpecialCharacters(tempArray[i]);
-            if (removeCharacter.length === 0) {
-                continue;
-            }
-            result += removeCharacter.charAt(0).toUpperCase();
-        }
-    }
-    return result;
+  let maxLen = 0;
+
+  const array = input
+    .reverse()
+
+    .map((s) => {
+      maxLen = Math.max(maxLen, s.length);
+
+      return s + " ".repeat(maxLen - s.length);
+    })
+
+    .reverse()
+
+    .map((s) => [...s]);
+
+  return array[0]
+    .map((_, i) => array.map((r) => r[i]))
+
+    .map((r) => r.join(""));
 }
 
-function removeSpecialCharacters(word) {
-    const regex = /[-!@#$%^&*(),.?":{}|<>_]/g;
-    return word.replace(regex, " ");
-}
-
-
-const test = parse('Complementary metal-oxide semiconductor');
-
+const test = transpose(['abc', 'de']);
 console.log(test);
